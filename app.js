@@ -63,6 +63,7 @@
   function api(body) {
     if (DEMO) return demoApi(body);
     return fetch(API, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body) })
+      .catch(function () { throw new Error('Сервер не ответил. Проверьте интернет и нажмите «Повторить»'); })
       .then(function (r) {
         return r.json().catch(function () { return {}; }).then(function (j) {
           if (!r.ok) { var e = new Error(j.error || ('Ошибка ' + r.status)); e.status = r.status; throw e; }
